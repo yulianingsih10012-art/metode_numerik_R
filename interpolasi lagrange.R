@@ -1,17 +1,32 @@
-x <- c(1, 2, 4, 5)
-y <- c(2, 5, 8, 10)
-lagrange <- function(x, y, xp) {
-  n <- length(x)
-  yp <- 0
-  for (i in 1:n) {
-    L <- 1
-    for (j in 1:n) {
-      if (i != j) {
-        L <- L * (xp - x[j]) / (x[i] - x[j])
-      }
+newton <- function (x_data, y_data, x) {
+  
+  n <- length(x_data)
+  
+  dd <- divided_difference(
+    x_data,
+    y_data
+  )
+  
+  result <- dd[1, 1]
+  product <- 1
+  
+  if (n >= 2) {
+    
+    for (j in 2:n) {
+      
+      product <- product *
+        (x - x_data[j-1])
+      
+      result <- result +
+        dd[1, j] * product
+      
     }
-    yp <- yp + y[i] * L
   }
-  return(yp)
+  
+  return(result)
 }
-lagrange(x, y, 3)
+newton(
+  x_data = c(1, 2, 4),
+  y_data = c(2, 3, 5),
+  x = 3
+)
